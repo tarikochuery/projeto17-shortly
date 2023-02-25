@@ -24,6 +24,14 @@ const auth = {
     } catch (error) {
       return { success: false, exists: undefined, error };
     }
+  },
+  getUserByEmail: async (email) => {
+    try {
+      const { rows: [user] } = await db.query('SELECT * FROM users WHERE email = $1', [email]);
+      return user ? { success: true, user, error: undefined } : { success: true, user: undefined, error: undefined };
+    } catch (error) {
+      return { success: false, user: undefined, error };
+    }
   }
 };
 

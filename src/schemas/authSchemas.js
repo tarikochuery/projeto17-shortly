@@ -1,7 +1,7 @@
 import Joi from "joi";
 
 const authSchemas = {
-  signUpSchema: Joi.object({
+  signUp: Joi.object({
     name: Joi.string()
       .required(),
     email: Joi.string()
@@ -13,6 +13,13 @@ const authSchemas = {
     confirmPassword: Joi.string()
       .required()
       .valid(Joi.ref('password'))
+  }),
+  signIn: Joi.object({
+    email: Joi.string()
+      .required()
+      .email(),
+    password: Joi.string()
+      .required()
   })
 };
 
