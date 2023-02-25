@@ -12,6 +12,14 @@ const shortUrl = {
     } catch (error) {
       return { success: false, id: undefined, error };
     }
+  },
+  getById: async (id) => {
+    try {
+      const { rows: [url] } = await db.query('SELECT id, "shortUrl", url FROM shorturls WHERE id = $1', [id]);
+      return { success: true, url, error: undefined };
+    } catch (error) {
+      return { success: false, url: undefined, error };
+    }
   }
 };
 

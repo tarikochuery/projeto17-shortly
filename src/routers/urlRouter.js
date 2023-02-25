@@ -12,3 +12,4 @@ urlRouter.post(
   validateSchema(urlSchemas.shorten),
   urlController.shorten
 );
+urlRouter.get('/urls/:id', urlController.getShortUrlById);

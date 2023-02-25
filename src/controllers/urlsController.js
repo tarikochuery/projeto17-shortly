@@ -20,6 +20,21 @@ const urlController = {
     } catch (error) {
       return res.status(500).send('Deu ruim no servidor');
     }
+  },
+  getShortUrlById: async (req, res) => {
+    const { id } = req.params;
+    try {
+      const { success, url, error } = await shortUrl.getById(id);
+      if (!success) {
+        console.log(error);
+        res.status(500).send('Deu ruim no db');
+      }
+      if (!url) res.sendStatus(404);
+      return res.send(url);
+    } catch (error) {
+      console.log(error);
+      res.status(500).send('Deu ruim no servidor');
+    }
   }
 };
 
