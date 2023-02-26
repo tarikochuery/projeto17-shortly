@@ -13,3 +13,4 @@ urlRouter.post(
   urlController.shorten
 );
 urlRouter.get('/urls/:id', urlController.getShortUrlById);
+urlRouter.get('/urls/open/:shortUrl', urlController.redirectShortUrl);

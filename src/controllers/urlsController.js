@@ -35,6 +35,21 @@ const urlController = {
       console.log(error);
       res.status(500).send('Deu ruim no servidor');
     }
+  },
+  redirectShortUrl: async (req, res) => {
+    const identifier = req.params.shortUrl;
+    try {
+      const { success, url, error } = await shortUrl.getByShortUrl(identifier);
+      if (!success) {
+        console.log(error);
+        return res.status(500).send('Deu ruim no DB');
+      }
+      if (!url) return res.sendStatus(404);
+      return res.redirect(url);
+    } catch (error) {
+      return res.status(500).send('Deu ruim no servidor!');
+    }
+
   }
 };
 

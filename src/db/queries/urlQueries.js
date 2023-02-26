@@ -20,6 +20,14 @@ const shortUrl = {
     } catch (error) {
       return { success: false, url: undefined, error };
     }
+  },
+  getByShortUrl: async (identifier) => {
+    try {
+      const { rows: [{ url }] } = await db.query('SELECT url FROM shorturls WHERE "shortUrl" = $1', [identifier]);
+      return { success: true, url, error: undefined };
+    } catch (error) {
+      return { success: false, url: undefined, error };
+    }
   }
 };
 
