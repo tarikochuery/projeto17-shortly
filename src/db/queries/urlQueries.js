@@ -23,10 +23,18 @@ const shortUrl = {
   },
   getByShortUrl: async (identifier) => {
     try {
-      const { rows: [{ url }] } = await db.query('SELECT url FROM shorturls WHERE "shortUrl" = $1', [identifier]);
+      const { rows: [url] } = await db.query('SELECT id, url FROM shorturls WHERE "shortUrl" = $1', [identifier]);
       return { success: true, url, error: undefined };
     } catch (error) {
       return { success: false, url: undefined, error };
+    }
+  },
+  incrementVisitsCountById: async (id) => {
+    try {
+      await db.query('UPDATE shorturls SET "visitsCount" = "visitsCount" + 1 WHERE id = $1', [id]);
+      return { success: true, error: undefined };
+    } catch (error) {
+      return { success: false, error };
     }
   }
 };

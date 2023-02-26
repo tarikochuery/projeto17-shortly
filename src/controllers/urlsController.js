@@ -45,7 +45,12 @@ const urlController = {
         return res.status(500).send('Deu ruim no DB');
       }
       if (!url) return res.sendStatus(404);
-      return res.redirect(url);
+      const { success: incrementSuccess, error: incrementError } = await shortUrl.incrementVisitsCountById(url.id);
+      if (!incrementSuccess) {
+        console.log(incrementError);
+        return res.status(500).send('Deu ruim no DB! (Incremento)');
+      }
+      return res.redirect(url.url);
     } catch (error) {
       return res.status(500).send('Deu ruim no servidor!');
     }
