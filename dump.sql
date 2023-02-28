@@ -82,7 +82,8 @@ CREATE TABLE public.users (
     id integer NOT NULL,
     name character varying(100) NOT NULL,
     email text NOT NULL,
-    password text NOT NULL
+    password text NOT NULL,
+    "createdAt" timestamp without time zone DEFAULT '2023-02-28 17:32:51.964302'::timestamp without time zone NOT NULL
 );
 
 
@@ -131,25 +132,20 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 -- Data for Name: shorturls; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO public.shorturls VALUES (1, 'H_IL1b3z-JKmru3UDcMbK', 'https://www.notion.so/bootcampra/Projeto-17-Shortly-API-c306c707e7504d32a689e0ff6dffb8e3', 1, 0, '2023-02-25 15:19:30.69336');
-INSERT INTO public.shorturls VALUES (2, 'lk4-cCOZ8tvR0kCHpjnb6', 'https://app.dbdesigner.net/designer/schema/604119', 1, 0, '2023-02-25 15:24:26.800125');
-INSERT INTO public.shorturls VALUES (4, 'ZYnPP4aHf0y-QX-i_TUM1', 'https://www.google.com/', 1, 0, '2023-02-25 15:27:49.076624');
-INSERT INTO public.shorturls VALUES (6, '5PK0fjQpXPKGst_pzXuie', 'https://pt-br.facebook.com/', 1, 0, '2023-02-25 15:29:09.564221');
-INSERT INTO public.shorturls VALUES (7, '5EDRn354AtVsyewI5Qdhp', 'https://github.com/', 1, 0, '2023-02-25 15:30:02.498339');
 
 
 --
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO public.users VALUES (1, 'João', 'joao@driven.com.br', '$2b$10$QdRrbMXGE0gg9d2uSKmUxOv4s5HNNRoZR2vJnJE9nhahPmxVhrvo6');
+INSERT INTO public.users VALUES (1, 'Joao', 'joao@driven.com.br', '$2b$10$TMPLFc8qdr2irnYhfRj.5.9.2Bf46G1onHaOVkIui2yByoozqfOpy', '2023-02-28 17:32:51.964302');
 
 
 --
 -- Name: shorturls_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.shorturls_id_seq', 7, true);
+SELECT pg_catalog.setval('public.shorturls_id_seq', 1, true);
 
 
 --
@@ -167,11 +163,11 @@ SELECT pg_catalog.setval('public.users_id_seq', 1, true);
 
 
 --
--- Name: shorturls shorturls_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: shorturls ShortUrls_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.shorturls
-    ADD CONSTRAINT shorturls_pkey PRIMARY KEY (id);
+    ADD CONSTRAINT "ShortUrls_pk" PRIMARY KEY (id);
 
 
 --
@@ -183,27 +179,27 @@ ALTER TABLE ONLY public.shorturls
 
 
 --
--- Name: shorturls shorturls_url_key; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.shorturls
-    ADD CONSTRAINT shorturls_url_key UNIQUE (url);
-
-
---
--- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: users users_email_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.users
-    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+    ADD CONSTRAINT users_email_key UNIQUE (email);
 
 
 --
--- Name: shorturls shorturls_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: users users_pk; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pk PRIMARY KEY (id);
+
+
+--
+-- Name: shorturls shorturls_fk0; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.shorturls
-    ADD CONSTRAINT "shorturls_userId_fkey" FOREIGN KEY ("userId") REFERENCES public.users(id);
+    ADD CONSTRAINT shorturls_fk0 FOREIGN KEY ("userId") REFERENCES public.users(id);
 
 
 --
