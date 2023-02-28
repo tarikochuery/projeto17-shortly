@@ -15,7 +15,7 @@ const shortUrl = {
   },
   getById: async (id) => {
     try {
-      const { rows: [url] } = await db.query('SELECT id, "shortUrl", url FROM shorturls WHERE id = $1', [id]);
+      const { rows: [url] } = await db.query('SELECT id, "shortUrl", url, "userId" FROM shorturls WHERE id = $1', [id]);
       return { success: true, url, error: undefined };
     } catch (error) {
       return { success: false, url: undefined, error };
@@ -32,6 +32,14 @@ const shortUrl = {
   incrementVisitsCountById: async (id) => {
     try {
       await db.query('UPDATE shorturls SET "visitsCount" = "visitsCount" + 1 WHERE id = $1', [id]);
+      return { success: true, error: undefined };
+    } catch (error) {
+      return { success: false, error };
+    }
+  },
+  delete: async (id) => {
+    try {
+      await db.query('DELETE FROM shorturls WHERE id = $1', [id]);
       return { success: true, error: undefined };
     } catch (error) {
       return { success: false, error };

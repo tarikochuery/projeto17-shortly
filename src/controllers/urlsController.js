@@ -54,7 +54,28 @@ const urlController = {
     } catch (error) {
       return res.status(500).send('Deu ruim no servidor!');
     }
+  },
+  deleteShortUrl: async (req, res) => {
+    const { id } = req.params;
+    const { userId } = res.locals;
+    try {
+      const { success, url, error } = await shortUrl.getById(id);
+      if (!success) {
+        console.log(error);
+        return res.status(500).send('Deu ruim no DB!');
+      }
+      if (!url) return res.sendStatus(404);
+      console.log(url);
+      if (url.userId !== userId) return res.sendStatus(401);
+      const { success: deleteSuccess, error: deleteError } = await shortUrl.delete(id);
+      if (!deleteSuccess) {
+        console.log(deleteError);
+        return res.status(500).send('Deu ruim no DB');
+      }
+      return res.sendStatus(204);
+    } catch (error) {
 
+    }
   }
 };
 

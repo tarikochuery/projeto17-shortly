@@ -14,3 +14,4 @@ urlRouter.post(
 );
 urlRouter.get('/urls/:id', urlController.getShortUrlById);
 urlRouter.get('/urls/open/:shortUrl', urlController.redirectShortUrl);
+urlRouter.delete('/urls/:id', validateToken, urlController.deleteShortUrl);
