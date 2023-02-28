@@ -31,7 +31,7 @@ const authControllers = {
       if (!user) return res.status(401).send('Email or password incorrect');
       const isPasswordCorrect = bcrypt.compareSync(password, user.password);
       if (!isPasswordCorrect) return res.status(401).send('Email or password incorrect');
-      const token = jwt.sign({ userId: user.id }, process.env.SECRET, { expiresIn: '60m' });
+      const token = jwt.sign({ userId: user.id }, 'SuperSecret', { expiresIn: '60m' });
       return res.send({ token });
     } catch (error) {
       return res.status(500).send('Deu ruim no servidor');
