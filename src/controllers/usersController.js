@@ -13,6 +13,18 @@ const usersController = {
     } catch (error) {
       return res.status(500).send('Deu ruim no servidor!');
     }
+  },
+  getRanking: async (req, res) => {
+    try {
+      const { success, ranking, error } = await users.rankingByVisits();
+      if (!success) {
+        console.log(error);
+        return res.status(500).send('Deu ruim no DB');
+      }
+      return res.send(ranking);
+    } catch (error) {
+      return res.status(500).send('Deu ruim no server');
+    }
   }
 };
 
